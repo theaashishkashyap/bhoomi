@@ -218,7 +218,45 @@ export default function LoginPage() {
              </span>
           </button>
 
-          <p className="mt-6 text-center text-[10px] font-bold text-slate-500 shrink-0">
+          <div className="mt-8 pt-8 border-t border-slate-100 shrink-0">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-6 h-6 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600">
+                <ShieldCheck size={14} />
+              </div>
+              <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Demo Access Protocol</h3>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: 'Guest Explorer', role: 'BUYER', verified: false, color: 'text-slate-600', bg: 'hover:bg-slate-50' },
+                { label: 'Verified Investor', role: 'BUYER', verified: true, color: 'text-emerald-600', bg: 'hover:bg-emerald-50/50' },
+                { label: 'Land Owner', role: 'SELLER', verified: true, color: 'text-blue-600', bg: 'hover:bg-blue-50/50' },
+                { label: 'Govt Admin', role: 'GOVERNMENT', verified: true, color: 'text-accent', bg: 'hover:bg-accent/5' }
+              ].map((demo) => (
+                <button
+                  key={demo.label}
+                  type="button"
+                  onClick={() => {
+                    login({
+                      id: `demo-${demo.role.toLowerCase()}`,
+                      email: `${demo.role.toLowerCase()}@demo.bhoomi.gov`,
+                      name: demo.label,
+                      role: demo.role,
+                      isAadharVerified: demo.verified,
+                      showIdentity: true
+                    }, "demo-token-12345");
+                    router.push("/discover");
+                  }}
+                  className={`flex flex-col items-start p-3 rounded-2xl border border-slate-100 transition-all ${demo.bg} group/demo`}
+                >
+                  <span className={`text-[10px] font-black uppercase tracking-widest ${demo.color}`}>{demo.label}</span>
+                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter mt-1">One-click bypass access</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <p className="mt-8 text-center text-[10px] font-bold text-slate-500 shrink-0">
             Node not provisioned? {" "}
             <Link href="/auth/signup" className="font-black text-accent hover:underline">Apply for Node Access</Link>
           </p>
