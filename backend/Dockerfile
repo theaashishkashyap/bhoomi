@@ -1,4 +1,8 @@
+# Use a modern node version with alpine for smaller image size
 FROM node:20-alpine
+
+# Install dependencies for Prisma on Alpine
+RUN apk add --no-cache openssl libc6-compat
 
 WORKDIR /app
 
