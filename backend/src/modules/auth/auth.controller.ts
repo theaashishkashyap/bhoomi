@@ -43,6 +43,10 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       throw new AppError('Invalid credentials', 401);
     }
 
+    if (!user.password) {
+      throw new AppError('Invalid credentials or account uses third-party login', 401);
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new AppError('Invalid credentials', 401);
 
