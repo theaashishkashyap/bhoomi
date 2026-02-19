@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id              String           @id @default(uuid())
+  email           String           @unique
+  password        String?
+  googleId        String?          @unique
+  name            String?
+  phone           String?
+  role            String           @default("GUEST")
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  auditLogs       AuditLog[]
+  contactRequests ContactRequest[]
+  listings        Listing[]        @relation("SellerListings")
+  verifications   Verification[]
+  aadharNumber    String?          @unique
+  isAadharVerified Boolean         @default(false)
+  showIdentity    Boolean          @default(false)
+}
+
+model Listing {
+  id                 String           @id @default(uuid())
+  title              String
+  description        String
+  category           String
+  purpose            String
+  location           String
+  state              String           @default("Unknown")
+  latitude           Float?
+  longitude          Float?
+  area               Float
+  areaUnit           String           @default("sq ft")
+  price              Float            @default(0)
+  imageUrl           String?
+  zoning             String?
+  usageType          String?
+  authority          String?
+  leaseTerms         String?
+  eligibilityRules   String?
+  buyerRequirements  String?
+  additionalDetails  String?
+  verifiedBadge      Boolean          @default(false)
+  verificationSource String?
+  views              Int              @default(0)
+  inquiryCount       Int              @default(0)
+  saveCount          Int              @default(0)
+  priceGrowth        Float            @default(0) // Percentage growth
+  sellerId           String
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  contactRequests    ContactRequest[]
+  seller             User             @relation("SellerListings", fields: [sellerId], references: [id])
+  verifications      Verification[]
+}
+
+model Verification {
+  id          String    @id @default(uuid())
+  listingId   String
+  sellerId    String
+  documents   String?
+  status      String    @default("PENDING")
+  adminReview String?
+  reviewedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  seller      User      @relation(fields: [sellerId], references: [id])
+  listing     Listing   @relation(fields: [listingId], references: [id])
+}
+
+model ContactRequest {
+  id           String    @id @default(uuid())
+  userId       String
+  listingId    String
+  consentGiven Boolean   @default(false)
+  revealedAt   DateTime?
+  createdAt    DateTime  @default(now())
+  listing      Listing   @relation(fields: [listingId], references: [id])
+  user         User      @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  action    String
+  details   Json?
+  timestamp DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
+}

@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-trust: var(--navy-trust);
+  --color-navy-deep: var(--navy-deep);
+  --color-govt-blue: var(--govt-blue);
+  --color-verify-green: var(--verify-green);
+  --color-legal-green: var(--legal-green);
+  --color-accent: var(--accent);
+  --color-accent-vibrant: #6366f1; /* NEW VIBRANT ACCENT */
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  
+  --color-background-main: var(--bg-main);
+  --color-background-card: var(--bg-card);
+  --color-surface-dark: var(--surface-dark);
+  
+  --color-slate-50: var(--slate-50);
+  --color-slate-100: var(--slate-100);
+  --color-slate-200: var(--slate-200);
+  --color-slate-300: var(--slate-300);
+  --color-slate-400: var(--slate-400);
+  --color-slate-500: var(--slate-500);
+  --color-slate-900: var(--slate-900);
+
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+  @import url('https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+
+  :root {
+    /* LIGHT THEME (VIBRANT & PROFESSIONAL) */
+    --navy-trust: #0f172a;
+    --navy-deep: #020617;
+    --govt-blue: #3b82f6;
+    --verify-green: #10b981;
+    --legal-green: #059669;
+    --accent: #4f46e5; /* VIBRANT INDIGO */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --surface-dark: #1e293b;
+    
+    --slate-50: #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-900: #0f172a;
+    
+    --border-main: rgba(15, 23, 42, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --text-muted: #64748b;
+    --text-dim: #94a3b8;
+  }
+
+  :root.dark-theme {
+    /* DARK THEME (MIDNIGHT SAPPHIRE) */
+    --navy-trust: #f8fafc;
+    --navy-deep: #020617;
+    --govt-blue: #60a5fa;
+    --verify-green: #34d399;
+    --legal-green: #10b981;
+    --accent: #6366f1; /* VIBRANT VIOLET/INDIGO */
+    
+    --bg-main: #020617;
+    --bg-card: #0f172a;
+    --surface-dark: #1e293b; 
+    
+    --slate-50: #0f172a;
+    --slate-100: #1e293b;
+    --slate-200: #334155;
+    --slate-300: #475569;
+    --slate-400: #94a3b8;
+    --slate-500: #cbd5e1;
+    --slate-900: #f8fafc;
+    
+    --border-main: rgba(99, 102, 241, 0.15);
+    --glass-bg: rgba(15, 23, 42, 0.7);
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+  }
+
+  /* GLOBAL ACCESSIBILITY REINFORCEMENT */
+  .dark-theme body {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+  }
+
+  .dark-theme h1, 
+  .dark-theme h2, 
+  .dark-theme h3, 
+  .dark-theme h4, 
+  .dark-theme h5, 
+  .dark-theme h6 {
+    color: #ffffff !important;
+  }
+
+  .dark-theme p, 
+  .dark-theme span:not(.stat-badge span) {
+    color: #cbd5e1;
+  }
+
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html, body {
+    background-color: var(--bg-main);
+    color: var(--slate-900);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    color: var(--navy-trust);
+  }
+}
+
+@layer components {
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-main);
+  }
+
+  .btn-premium {
+    @apply inline-flex items-center justify-center px-8 py-4 rounded-2xl font-bold transition-all duration-300 transform active:scale-95;
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 50%, #6366f1 100%);
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.3);
+  }
+
+  .btn-premium:hover {
+    background-position: right center;
+    box-shadow: 0 15px 30px -5px rgba(79, 70, 229, 0.4);
+    @apply -translate-y-0.5;
+  }
+
+  .dark-theme .btn-premium {
+    background: linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #4f46e5 100%);
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+  }
+
+  .card-premium {
+    @apply rounded-[2.5rem] p-8 border transition-all duration-500;
+    background-color: var(--bg-card);
+    border-color: var(--border-main);
+  }
+
+  .dashboard-sidebar {
+    @apply w-[300px] h-screen sticky top-0 border-r p-8 flex flex-col;
+    background-color: var(--bg-card);
+    border-color: var(--border-main);
+  }
+
+  .nav-item {
+    @apply flex items-center gap-4 px-6 py-4 rounded-2xl text-sm font-semibold transition-all duration-300;
+    color: var(--text-muted);
+  }
+
+  .nav-item:hover {
+    @apply bg-slate-50/10;
+    color: var(--navy-trust);
+  }
+
+  .nav-item.active {
+    background: rgba(37, 99, 235, 0.1);
+    @apply text-accent;
+    border: 1px solid rgba(37, 99, 235, 0.2);
+  }
+
+  .stat-badge {
+    @apply px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2;
+  }
+
+  .registry-input {
+    @apply w-full px-8 py-5 rounded-3xl font-medium transition-all duration-300 outline-none border focus:ring-4;
+    background-color: var(--slate-50);
+    border-color: var(--border-main);
+    color: var(--navy-trust);
+  }
+
+  .registry-input::placeholder {
+    color: var(--slate-400);
+  }
+
+  .registry-input:focus {
+    @apply border-accent/40 ring-accent/5;
+    background-color: white;
+  }
+
+  .dark-theme .registry-input {
+    background-color: rgba(15, 23, 42, 0.5);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: white;
+  }
+
+  .dark-theme .registry-input:focus {
+    background-color: rgba(15, 23, 42, 0.8);
+    border-color: var(--accent);
+  }
+
+  .dark-theme .registry-input::placeholder {
+    color: var(--slate-500);
+  }
+}
+
+@layer utilities {
+  .bg-mesh {
+    background-color: var(--bg-main);
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
