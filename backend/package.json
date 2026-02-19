@@ -8,7 +8,7 @@
     "dev": "tsx src/app.ts",
     "build": "tsc",
     "start": "node dist/app.js",
-    "render-start": "npx prisma db push && node dist/app.js",
+    "render-start": "echo '🔍 Checking Environment...' && [ -z \"$DATABASE_URL\" ] && echo '❌ Error: DATABASE_URL is missing' && exit 1 || echo '✅ DATABASE_URL found' && [ -z \"$PORT\" ] && export PORT=10000 && echo 'ℹ️ Using default PORT 10000' || echo \"✅ PORT is set to $PORT\" && npx prisma db push && node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
