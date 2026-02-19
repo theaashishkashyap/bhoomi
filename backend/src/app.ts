@@ -33,7 +33,8 @@ app.use('/api/proposals', proposalRoutes);
 app.use(errorHandler);
 
 app.listen(port, () => {
-  console.log(`BHOOMI Backend listening at http://localhost:${port}`);
+  console.log(`🚀 BHOOMI Backend initialized on port ${port}`);
+  console.log(`📡 URL Mode: ${process.env.NODE_ENV || 'development'}`);
 });
 
 export default app;
